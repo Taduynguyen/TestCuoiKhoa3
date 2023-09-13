@@ -1,9 +1,16 @@
-const express = require("express");
-const { connectToDb, db } = require("./db");
+import express from "express";
+import "dotenv/config";
+import { connectToDatabase } from "./db.js";
+import router from "./routes/route.js";
 
 const app = express();
+const PORT = process.env.PORT;
 
-app.listen(3000, () => {
-  console.log("App is running at 3000");
-  connectToDb();
+connectToDatabase();
+
+app.use(express.json());
+app.use("/api/v1", router)
+
+app.listen(PORT, () => {
+  console.log(`App is running at port: ${PORT}`);
 });
